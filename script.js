@@ -43,6 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
       inputLineHeight.value = originalValues.lineHeight;
       inputLetterSpacing.value = originalValues.letterSpacing;
       inputForm.style.display = "block";
+
+      // テキストエリアにフォーカスを当てる
+      setTimeout(() => {
+        inputText.focus();
+      }, 0);
     }
   }
 
@@ -187,8 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const lines = textElement.textContent.split("\n");
         const totalTextHeight = lines.length * fontSize * lineHeight;
-        let startY =
-          y + (height - totalTextHeight) / 2 + (fontSize * lineHeight) / 2;
+        let startY = y + height / 2 - totalTextHeight / 2 + fontSize / 2;
 
         lines.forEach((line, index) => {
           ctx.fillText(
