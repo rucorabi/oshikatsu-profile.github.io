@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelButton = document.getElementById("cancelButton");
   const iconUpload = document.getElementById("iconUpload");
   const generateButton = document.getElementById("generateButton");
+  const currentEditArea = document.getElementById("currentEditArea");
 
   let currentArea = null;
   let originalValues = {};
@@ -19,7 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function openInputForm(area) {
+    if (currentArea) {
+      currentArea.classList.remove("editing");
+    }
     currentArea = area;
+    currentArea.classList.add("editing");
+
     if (currentArea.id === "icon") {
       iconUpload.click();
     } else {
@@ -42,12 +48,28 @@ document.addEventListener("DOMContentLoaded", function () {
       inputSize.value = originalValues.size;
       inputLineHeight.value = originalValues.lineHeight;
       inputLetterSpacing.value = originalValues.letterSpacing;
-      inputForm.style.display = "block";
 
-      // テキストエリアにフォーカスを当てる
+      currentEditArea.textContent =
+        currentArea.id.charAt(0).toUpperCase() + currentArea.id.slice(1);
+      showForm();
+
       setTimeout(() => {
         inputText.focus();
-      }, 0);
+      }, 100);
+    }
+  }
+
+  function showForm() {
+    inputForm.style.display = "block";
+    document.body.style.overflow = "hidden";
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  function hideForm() {
+    inputForm.style.display = "none";
+    document.body.style.overflow = "";
+    if (currentArea) {
+      currentArea.classList.remove("editing");
     }
   }
 
@@ -69,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   saveButton.addEventListener("click", () => {
-    inputForm.style.display = "none";
+    hideForm();
   });
 
   cancelButton.addEventListener("click", () => {
@@ -81,7 +103,14 @@ document.addEventListener("DOMContentLoaded", function () {
       textElement.style.lineHeight = originalValues.lineHeight;
       textElement.style.letterSpacing = `${originalValues.letterSpacing}px`;
     }
-    inputForm.style.display = "none";
+    hideForm();
+  });
+
+  // エスケープキーでフォームを閉じる
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && inputForm.style.display === "block") {
+      cancelButton.click();
+    }
   });
 
   // フォームの外側をクリックしたときにフォームを閉じる
@@ -92,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
       !e.target.classList.contains("clickable-area") &&
       !e.target.classList.contains("clickable-area-text")
     ) {
-      inputForm.style.display = "none";
+      hideForm();
     }
   });
 

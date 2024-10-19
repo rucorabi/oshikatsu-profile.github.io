@@ -35,11 +35,16 @@ body {
     font-size: 14px;
     color: #000;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .clickable-area:hover {
     background-color: rgba(255, 255, 255, 0.7);
+}
+
+.clickable-area.editing {
+    border-color: #4CAF50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
 }
 
 .clickable-area-text {
@@ -61,18 +66,46 @@ body {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
-    padding: 15px;
     box-sizing: border-box;
     z-index: 1000;
     display: none;
 }
 
-.form-content {
-    max-width: 600px;
-    margin: 0 auto;
+.form-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.form-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+#currentEditArea {
+    font-weight: normal;
+    color: #4CAF50;
+}
+
+.form-buttons {
+    display: flex;
     gap: 10px;
+}
+
+.form-buttons button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-content {
+    padding: 15px;
 }
 
 .input-group {
@@ -81,13 +114,15 @@ body {
 
 .input-row {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
 }
 
 .input-row .input-group {
-    flex: 1;
-    min-width: calc(25% - 7.5px);
+    flex: 0 0 auto;
+    min-width: 80px;
 }
 
 .input-group label {
@@ -131,32 +166,6 @@ body {
     background-color: #45a049;
 }
 
-#outputImage {
-    max-width: 100%;
-    margin-top: 20px;
-}
-
-.form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.form-buttons button {
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 14px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.form-buttons button:hover {
-    background-color: #45a049;
-}
-
 #icon img {
     width: 100%;
     height: 100%;
@@ -172,25 +181,16 @@ body {
         font-size: 12px;
     }
 
-    .bottom-form {
-        padding: 10px;
+    .form-header {
+        padding: 8px 12px;
+    }
+
+    .form-header h2 {
+        font-size: 16px;
     }
 
     .form-content {
-        gap: 8px;
-    }
-
-    .input-row {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 5px;
-        margin-bottom: 10px;
-    }
-
-    .input-row .input-group {
-        flex: 0 0 auto;
-        width: auto;
-        min-width: 80px;
+        padding: 12px;
     }
 
     .input-group label {
@@ -200,29 +200,12 @@ body {
     .input-group textarea,
     .input-group select,
     .input-group input[type="number"] {
-        font-size: 13px;
+        font-size: 14px;
         padding: 6px;
-    }
-
-    .input-group textarea {
-        width: calc(100% - 20px);
-        margin: 0 10px;
     }
 
     #generateButton {
         padding: 10px;
         font-size: 14px;
-    }
-
-    .form-buttons {
-        margin-top: 15px;
-        justify-content: space-between;
-    }
-
-    .form-buttons button {
-        padding: 12px 20px;
-        font-size: 16px;
-        flex: 1;
-        margin: 0 5px;
     }
 }
